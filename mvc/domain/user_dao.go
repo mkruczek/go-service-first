@@ -16,7 +16,7 @@ var (
 )
 
 func GetUsers() []*User {
-	result := make([]*User, len(users))
+	result := []*User{}
 
 	for _, v := range users {
 		result = append(result, v)
