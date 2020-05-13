@@ -5,10 +5,16 @@ import (
 	"github.com/mkruczek/go-service-first/mvc/utils"
 )
 
-func GetUsers() []*domain.User {
-	return domain.GetUsers()
+type userService struct{}
+
+var (
+	UserService userService
+)
+
+func (us *userService) GetUsers() []*domain.User {
+	return domain.UserDao.GetUsers()
 }
 
-func GetUser(id uint64) (*domain.User, *utils.ApplicationError) {
-	return domain.GetUser(id)
+func (us *userService) GetUser(id uint64) (*domain.User, *utils.ApplicationError) {
+	return domain.UserDao.GetUser(id)
 }

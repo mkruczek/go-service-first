@@ -12,7 +12,7 @@ import (
 )
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	users := services.GetUsers()
+	users := services.UserService.GetUsers()
 	jsonValue, _ := json.Marshal(users)
 	w.Write(jsonValue)
 }
@@ -35,7 +35,7 @@ func GetUser(resp http.ResponseWriter, req *http.Request) {
 
 	log.Printf("Procesing for  user ID : %d.\n", id)
 
-	u, appErr := services.GetUser(id)
+	u, appErr := services.UserService.GetUser(id)
 	if appErr != nil {
 		resp.WriteHeader(appErr.Status)
 		jsonvalue, _ := json.Marshal(appErr)
@@ -45,5 +45,4 @@ func GetUser(resp http.ResponseWriter, req *http.Request) {
 
 	jsonvalue, _ := json.Marshal(u)
 	resp.Write(jsonvalue)
-
 }

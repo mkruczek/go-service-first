@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	UserDao userDaoInterface
 	//mock db
 	users = map[uint64]*User{
 		1: {ID: 1, Firstname: "Foo", Lastname: "Bar", Email: "foo@bar.io"},
@@ -15,7 +16,18 @@ var (
 	}
 )
 
-func GetUsers() []*User {
+func init() {
+	UserDao = &userDao{}
+}
+
+type userDaoInterface interface {
+	GetUser(uint64) (*User, *utils.ApplicationError)
+	GetUsers() []*User
+}
+
+type userDao struct{}
+
+func (ud *userDao) GetUsers() []*User {
 	result := []*User{}
 
 	for _, v := range users {
@@ -25,7 +37,7 @@ func GetUsers() []*User {
 	return result
 }
 
-func GetUser(id uint64) (*User, *utils.ApplicationError) {
+func (ud *userDao) GetUser(id uint64) (*User, *utils.ApplicationError) {
 	if user := users[id]; user != nil {
 		return user, nil
 	}

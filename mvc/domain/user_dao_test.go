@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetUsers(t *testing.T) {
-	users := GetUsers()
+	users := UserDao.GetUsers()
 
 	assert.EqualValues(t, 2, len(users), "expect list with two users")
 
@@ -18,7 +18,7 @@ func TestGetUsers(t *testing.T) {
 }
 
 func TestGetUserNonExist(t *testing.T) {
-	user, err := GetUser(0)
+	user, err := UserDao.GetUser(0)
 
 	assert.Nil(t, user, "we don't expect user witch id 0")
 	assert.NotNil(t, err, "we don't expect user witch id 0")
@@ -39,7 +39,7 @@ func TestGetUserNonExist(t *testing.T) {
 
 func TestGetUserExist(t *testing.T) {
 
-	user, err := GetUser(1)
+	user, err := UserDao.GetUser(1)
 
 	assert.Nil(t, err, "expect nil err")
 	assert.EqualValues(t, 1, user.ID, "expect ID 1")
