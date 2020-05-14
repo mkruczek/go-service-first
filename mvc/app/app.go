@@ -2,17 +2,24 @@ package app
 
 import (
 	"log"
-	"net/http"
 
-	"github.com/mkruczek/go-service-first/mvc/controllers"
+	"github.com/gin-gonic/gin"
 )
+
+var (
+	router *gin.Engine
+)
+
+func init() {
+	router = gin.Default()
+}
 
 func StartApp() {
 	log.Printf("Starting app...")
-	http.HandleFunc("/users", controllers.GetUsers)
-	http.HandleFunc("/user", controllers.GetUser)
 
-	if err := http.ListenAndServe(":8888", nil); err != nil {
+	mapUrl()
+
+	if err := router.Run(":8888"); err != nil {
 		panic(err)
 	}
 
